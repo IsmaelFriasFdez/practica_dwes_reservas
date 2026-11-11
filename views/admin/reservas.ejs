@@ -1,0 +1,31 @@
+<%- include("../parciales/cabecera", { tituloPagina }) %>
+
+<h1>Todas las reservas</h1>
+
+<table>
+  <thead>
+    <tr><th>Nº</th><th>Usuario (id)</th><th>Equipo</th><th>Fecha</th><th>Turno</th><th>Estado</th><th></th></tr>
+  </thead>
+  <tbody>
+    <% for (const reserva of reservas) { %>
+      <tr>
+        <td><%= reserva.id %></td>
+        <td><%= reserva.usuarioId %></td>
+        <td><%= reserva.equipo.codigo %> - <%= reserva.equipo.nombre %></td>
+        <td><%= reserva.fecha %></td>
+        <td><%= reserva.turno === "manana" ? "Mañana" : "Tarde" %></td>
+        <td class="estado-<%= reserva.estado %>"><%= reserva.estado %></td>
+        <td>
+          <% if (reserva.puedeCancelar) { %>
+            <form class="en-linea" action="/admin/reservas/<%= reserva.id %>/cancelar" method="post">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button type="submit">Cancelar</button>
+            </form>
+          <% } %>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<%- include("../parciales/pie") %>

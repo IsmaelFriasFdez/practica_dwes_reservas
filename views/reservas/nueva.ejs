@@ -1,0 +1,59 @@
+<%- include("../parciales/cabecera", { tituloPagina: vm.titulo }) %>
+
+<h1><%= vm.titulo %></h1>
+
+<% if (vm.errores.length > 0) { %>
+  <div class="alerta" role="alert">
+    <ul>
+      <% for (const error of vm.errores) { %>
+        <li><%= error %></li>
+      <% } %>
+    </ul>
+  </div>
+<% } %>
+
+<h2>1. Elige fecha y turno</h2>
+<form action="/reservas/nueva" method="get">
+  <label for="consulta-fecha">Fecha</label>
+  <input id="consulta-fecha" name="fecha" type="date" min="<%= vm.fechaMinima %>"
+         value="<%= vm.valores.fecha %>" required>
+
+  <label for="consulta-turno">Turno</label>
+  <select id="consulta-turno" name="turno" required>
+    <option value="">Selecciona un turno</option>
+    <% for (const opcion of vm.turnos) { %>
+      <option value="<%= opcion.valor %>"
+        <%= opcion.valor === vm.valores.turno ? "selected" : "" %>>
+        <%= opcion.texto %>
+      </option>
+    <% } %>
+  </select>
+  <button type="submit">Ver equipos disponibles</button>
+</form>
+
+<% if (vm.consultado) { %>
+  <h2>2. Elige un equipo libre el <%= vm.valores.fecha %> (<%= vm.valores.turno === "manana" ? "mañana" : "tarde" %>)</h2>
+  <% if (!vm.puedeEnviar) { %>
+    <p>No quedan equipos disponibles para esa fecha y turno.</p>
+  <% } else { %>
+    <form class="bloque" method="post" action="/reservas">
+      <input type="hidden" name="_csrf" value="<%= vm.csrfToken %>">
+      <input type="hidden" name="fecha" value="<%= vm.valores.fecha %>">
+      <input type="hidden" name="turno" value="<%= vm.valores.turno %>">
+
+      <label for="equipoId">Equipo</label>
+      <select id="equipoId" name="equipoId" required>
+        <option value="">Selecciona un equipo</option>
+        <% for (const opcion of vm.equipos) { %>
+          <option value="<%= opcion.valor %>"
+            <%= opcion.valor === vm.valores.equipoId ? "selected" : "" %>>
+            <%= opcion.texto %>
+          </option>
+        <% } %>
+      </select>
+      <button type="submit">Reservar</button>
+    </form>
+  <% } %>
+<% } %>
+
+<%- include("../parciales/pie") %>

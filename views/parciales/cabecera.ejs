@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= tituloPagina %> · Reserva de equipos</title>
+  <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/equipos">Equipos</a>
+      <% if (usuarioActual) { %>
+        <a href="/reservas/nueva">Nueva reserva</a>
+        <a href="/mis-reservas">Mis reservas</a>
+        <% if (usuarioActual.rol === "admin") { %>
+          <a href="/admin/equipos">Admin: equipos</a>
+          <a href="/admin/reservas">Admin: reservas</a>
+        <% } %>
+        <span class="derecha">
+          <a href="/perfil"><%= usuarioActual.nombre %></a>
+          <form action="/logout" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit">Cerrar sesión</button>
+          </form>
+        </span>
+      <% } else { %>
+        <span class="derecha">
+          <a href="/login">Iniciar sesión</a>
+          <a href="/registro">Registrarse</a>
+        </span>
+      <% } %>
+    </nav>
+  </header>
+  <main>
+    <% if (aviso) { %>
+      <p class="aviso" role="status"><%= aviso %></p>
+    <% } %>

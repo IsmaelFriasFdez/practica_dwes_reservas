@@ -1,0 +1,11 @@
+<%- include("../parciales/cabecera", { tituloPagina }) %>
+
+<h1>Mi perfil</h1>
+
+<table>
+  <tr><th>Nombre</th><td><%= usuario.nombre %></td></tr>
+  <tr><th>Correo</th><td><%= usuario.email %></td></tr>
+  <tr><th>Rol</th><td><%= usuario.rol %></td></tr>
+</table>
+
+<%- include("../parciales/pie") %>

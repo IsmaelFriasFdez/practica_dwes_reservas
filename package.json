@@ -1,0 +1,25 @@
+{
+  "name": "practica-dwes-reservas",
+  "version": "1.0.0",
+  "description": "Sistema de reserva de equipos informáticos (DWES UD2 y UD3)",
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env src/server.js",
+    "dev": "node --env-file=.env --watch src/server.js",
+    "test": "vitest run",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-rate-limit": "^8.7.4",
+    "express-session": "^1.17.3"
+  },
+  "devDependencies": {
+    "supertest": "^6.3.3",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
+  }
+}

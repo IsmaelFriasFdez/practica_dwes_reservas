@@ -1,0 +1,13 @@
+<%- include("../parciales/cabecera", { tituloPagina }) %>
+
+<h1><%= equipo.nombre %></h1>
+
+<table>
+  <tr><th>Código</th><td><%= equipo.codigo %></td></tr>
+  <tr><th>Tipo</th><td><%= equipo.tipo %></td></tr>
+  <tr><th>Estado</th><td class="estado-<%= equipo.estado %>"><%= equipo.estado %></td></tr>
+</table>
+
+<p><a href="/equipos">Volver al catálogo</a></p>
+
+<%- include("../parciales/pie") %>

@@ -1,0 +1,67 @@
+<%- include("../parciales/cabecera", { tituloPagina }) %>
+
+<h1>Administrar equipos</h1>
+
+<table>
+  <thead>
+    <tr><th>ID</th><th>Código</th><th>Nombre</th><th>Tipo</th><th>Estado</th><th>Cambiar estado</th></tr>
+  </thead>
+  <tbody>
+    <% for (const equipo of equipos) { %>
+      <tr>
+        <td><%= equipo.id %></td>
+        <td><%= equipo.codigo %></td>
+        <td><%= equipo.nombre %></td>
+        <td><%= equipo.tipo %></td>
+        <td class="estado-<%= equipo.estado %>"><%= equipo.estado %></td>
+        <td>
+          <form class="en-linea" action="/admin/equipos/<%= equipo.id %>/estado" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <% const nuevoEstado = equipo.estado === "operativo" ? "fuera_de_servicio" : "operativo"; %>
+            <input type="hidden" name="estado" value="<%= nuevoEstado %>">
+            <button type="submit">Marcar como <%= nuevoEstado %></button>
+          </form>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<h2>Añadir equipo</h2>
+<form class="bloque" action="/admin/equipos" method="post">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <label for="codigo">Código</label>
+  <input id="codigo" name="codigo" value="<%= valores.codigo %>" placeholder="PORT-003">
+  <% if (errores.codigo) { %>
+    <p class="error"><%= errores.codigo %></p>
+  <% } %>
+
+  <label for="nombre">Nombre</label>
+  <input id="nombre" name="nombre" value="<%= valores.nombre %>">
+  <% if (errores.nombre) { %>
+    <p class="error"><%= errores.nombre %></p>
+  <% } %>
+
+  <label for="tipo">Tipo</label>
+  <select id="tipo" name="tipo">
+    <option value="sobremesa" <%= valores.tipo === "sobremesa" ? "selected" : "" %>>Sobremesa</option>
+    <option value="portatil" <%= valores.tipo === "portatil" ? "selected" : "" %>>Portátil</option>
+  </select>
+  <% if (errores.tipo) { %>
+    <p class="error"><%= errores.tipo %></p>
+  <% } %>
+
+  <label for="estado">Estado</label>
+  <select id="estado" name="estado">
+    <option value="operativo" <%= valores.estado === "operativo" ? "selected" : "" %>>Operativo</option>
+    <option value="fuera_de_servicio" <%= valores.estado === "fuera_de_servicio" ? "selected" : "" %>>Fuera de servicio</option>
+  </select>
+  <% if (errores.estado) { %>
+    <p class="error"><%= errores.estado %></p>
+  <% } %>
+
+  <button type="submit">Añadir</button>
+</form>
+
+<%- include("../parciales/pie") %>
