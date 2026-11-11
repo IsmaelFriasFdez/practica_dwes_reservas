@@ -3,7 +3,7 @@
 Aplicación web con Node.js, Express, EJS y JavaScript, con una parte en TypeScript, para
 gestionar la reserva de equipos informáticos de un centro educativo.
 
-**Historial de uso de IA:** _[enlace a la conversación]_
+**Historial de uso de IA:** https://share.gemini.google/Akq8jvOXt3IP
 
 ## Instalación, configuración y ejecución
 
